@@ -18,7 +18,7 @@ module.exports = webpackMerge(commonConfig, {
 
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ // https://github.com/angular/angular/issues/10618
+    new webpack.optimize.UglifyJsPlugin({
       mangle: {
         keep_fnames: true
       }
@@ -31,7 +31,7 @@ module.exports = webpackMerge(commonConfig, {
     }),
     new webpack.LoaderOptionsPlugin({
       htmlLoader: {
-        minimize: false // workaround for ng2
+        minimize: false
       }
     })
   ]

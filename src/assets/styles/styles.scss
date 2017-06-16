@@ -1,0 +1,13 @@
+.kher{
+    background-color: blue;
+    width: 300px;
+    height: 300px;
+    >div{
+        background: red;
+        width: 100px;
+        height: 100px;
+        display: flex;
+        text-align: center;
+        align-items: center;
+    }
+}

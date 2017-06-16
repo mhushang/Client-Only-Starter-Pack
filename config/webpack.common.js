@@ -34,26 +34,38 @@ module.exports = {
         loader: 'file-loader?name=assets/[name].[hash].[ext]'
       },
       {
-        test: /\.css$/,
-        exclude: helpers.root('src', 'app'),
-        loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' })
+        test: /\.scss$/,
+        exclude: helpers.root('src', 'assets'),
+        loader: 'raw-loader!postcss-loader!sass-loader'
       },
       {
-        test: /\.css$/,
-        include: helpers.root('src', 'app'),
-        loader: 'raw-loader'
+        test: /\.scss$/,
+        include: helpers.root('src', 'assets'),
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: 'css-loader!postcss-loader!sass-loader'
+        })
       }
     ]
   },
 
   plugins: [
-    // Workaround for angular/angular#11580
     new webpack.ContextReplacementPlugin(
       // The (\\|\/) piece accounts for path separators in *nix and Windows
       /angular(\\|\/)core(\\|\/)@angular/,
       helpers.root('./src'), // location of your src
       {} // a map of your routes
     ),
+
+    new webpack.ProvidePlugin({   
+        jQuery: 'jquery',
+        $: 'jquery',
+        jquery: 'jquery'
+    }),
+
+    new webpack.HotModuleReplacementPlugin(), //HMR можно отключить при желании
+
+    new ExtractTextPlugin('[name].css'),
 
     new webpack.optimize.CommonsChunkPlugin({
       name: ['app', 'vendor', 'polyfills']
